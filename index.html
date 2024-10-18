@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Scramble Game</title>
+    <title>Word Scramble</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="modal" id="nameModal">
         <div class="modal-content">
-            <h2>Enter Your Name</h2>
-            <input type="text" id="playerName" class="modal-input" placeholder="Your Name" required>
-            <button class="modal-btn" id="startGameBtn" disabled>Start Game</button>
+            <h2>Enter Player Name</h2>
+            <input type="text" id="playerName" class="modal-input" placeholder="Your Name">
+            <button id="startGameBtn" class="modal-btn" disabled>Start Game</button>
         </div>
     </div>
 
-    <div class="container" id="gameContainer" style="display:none;">
-        <h1>Word Scramble Game</h1>
+    <div class="container" id="gameContainer" style="display: none;">
+        <h1>Word Scramble </h1>
+        <p class="scrambled-word" id="scrambledWord"></p>
+        <input type="text" id="userInput" class="user-input" placeholder="Your Guess">
+        <button id="submitGuess" class="start-btn">Submit Guess</button>
+
+        <p class="timer" id="timer"></p>
         <div class="score-container">
-            <p id="playerInfo"></p>
+            <p id="playerInfo">Player: </p>
             <p>Highest Score: <span id="highestScore">0</span></p>
         </div>
-        <div class="scrambled-word" id="scrambledWord"></div>
-        <input type="text" id="userInput" class="user-input" placeholder="Unscramble the word...">
-        <button class="start-btn" id="submitGuess">Submit Guess</button>
-        <div class="message" id="message"></div>
-        <div class="timer" id="timer"></div>
-        
-        <button class="secondary-btn" id="tryAgainBtn">Try Again</button>
-        <button class="secondary-btn" id="backBtn">Back</button>
+        <p class="message" id="message"></p>
+
+        <button id="tryAgainBtn" class="secondary-btn">Try Again</button>
+        <button id="backBtn" class="start-btn">Back</button>
     </div>
 
     <script src="script.js"></script>

@@ -8,10 +8,11 @@ const words = [
     "super", "this", "method", "instance", "encapsulation", "polymorphism", 
     "refactor", "git", "repository", "commit", "merge", "branch", "deploy", 
     "api", "rest", "graphql", "callback"
-  ];
-  
+];
+
 let currentWord, playerName, highestScore = 0, score = 0;
-let timerInterval;
+let timerInterval; 
+let timeLeft = 30;  
 
 const nameModal = document.getElementById("nameModal");
 const startGameBtn = document.getElementById("startGameBtn");
@@ -38,15 +39,14 @@ function startGame() {
     gameContainer.style.display = "block";
     playerInfoDisplay.textContent = `Player: ${playerName}`;
     resetGame();
-    startTimer();
 }
 
 function resetGame() {
     score = 0;
     generateNewWord();
     messageDisplay.textContent = '';
-    clearInterval(timerInterval); 
-    startTimer();
+    clearInterval(timerInterval);  // Ensure no existing timer is running
+    startTimer();  // Start a fresh timer
 }
 
 function generateNewWord() {
@@ -69,11 +69,18 @@ function checkGuess() {
 }
 
 function startTimer() {
-    let timeLeft = 30; // 30 seconds
+    timeLeft = 30;  // Reset the time
     timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+    
+    // Clear any existing interval before starting a new one
+    clearInterval(timerInterval);
+
+    // Start a new timer
     timerInterval = setInterval(() => {
         timeLeft--;
         timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+
+        // When time runs out, end the game
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             endGame();
@@ -88,7 +95,7 @@ function endGame() {
 }
 
 function goBackToModal() {
-    clearInterval(timerInterval); 
+    clearInterval(timerInterval);  // Stop the timer when going back
     gameContainer.style.display = "none";
     nameModal.style.display = "flex";
     playerNameInput.value = '';
@@ -98,11 +105,19 @@ function goBackToModal() {
     timerDisplay.textContent = '';
 }
 
+// Event listeners
 playerNameInput.addEventListener('input', () => {
     startGameBtn.disabled = playerNameInput.value.trim() === '';
 });
 
 startGameBtn.addEventListener('click', startGame);
 submitGuess.addEventListener('click', checkGuess);
-tryAgainBtn.addEventListener('click', resetGame);
+
+tryAgainBtn.addEventListener('click', () => {
+    clearInterval(timerInterval);  // Stop any existing timer
+    resetGame();  // Reset score and generate a new word
+    startTimer();  // Restart the timer
+    messageDisplay.textContent = "Game restarted. New word!";
+});
+
 backBtn.addEventListener('click', goBackToModal);
